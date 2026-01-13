@@ -5,9 +5,8 @@ Given a term and a list of desired courses, it generates **non-conflicting sched
 
 This repo is **in progress**, the database + schedule-generation logic is complete and work on sample data. The next steps being worked on is connecting to real course data + building a basic interface.
 
--------------------------------------------
 
-## What this project does (at a high level)
+## What this project does
 
 ### 1. Stores course data in a relational model
 Courses → Sections → Meetings:
@@ -33,7 +32,6 @@ After schedules are generated, schedules can be filtered out if:
 
 This uses meeting-to-meeting “next class” checks on the same day.
 
--------------------------------------------
 
 ## Repo structure
 
@@ -53,7 +51,6 @@ This uses meeting-to-meeting “next class” checks on the same day.
   - unique course codes (`subject + course_number`)
   - unique sections per course/term/code
 
--------------------------------------------
 
 ### `data/`
 **Sample data to make the project runnable without external APIs.**
@@ -70,7 +67,6 @@ This uses meeting-to-meeting “next class” checks on the same day.
 - `data/walking_time_sample.sql`  
   Inserts sample walking times (minutes) between building codes (ex: DMP → ANGU).
 
--------------------------------------------
 
 ### `queries/`
 **SQL scripts that run the “planner logic.”**
@@ -116,9 +112,8 @@ This uses meeting-to-meeting “next class” checks on the same day.
 
   This exists so it’s easy to verify the filter is checking the correct pairs and that walking-time lookups behave as expected.
 
--------------------------------------------
 
-## SQL concepts demonstrated (skills used)
+## SQL concepts demonstrated
 
 This project intentionally focuses on SQL problem solving:
 
@@ -144,7 +139,6 @@ This project intentionally focuses on SQL problem solving:
   - reject candidate sections that conflict with already-chosen ones
   - remove schedules that fail walking-time constraints
 
--------------------------------------------
 
 ## How to run (sample workflow)
 
