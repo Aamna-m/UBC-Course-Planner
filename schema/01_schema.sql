@@ -38,3 +38,19 @@ CREATE TABLE walking_time (
   PRIMARY KEY (from_building, to_building)
 );
 
+-- Be able to run multiple schedule requests, so students can add as many courses as they would like 
+
+CREATE TABLE schedule_requests (
+  request_id SERIAL PRIMARY KEY,
+  term TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE desired_courses (
+  request_id INT NOT NULL REFERENCES schedule_requests(request_id) ON DELETE CASCADE,
+  subject TEXT NOT NULL,
+  course_number TEXT NOT NULL,
+  PRIMARY KEY (request_id, subject, course_number)
+);
+
+

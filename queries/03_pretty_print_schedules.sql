@@ -1,4 +1,5 @@
 -- pretty print schedules for the request_id
+-- this re-runs the generator query as a CTE called gen
 
 WITH gen AS (
   -- paste the FINAL SELECT from generator here, outputs request_id, picked_sections
