@@ -3,7 +3,7 @@
 This project is a SQL-first schedule generator for UBC course data.  
 Given a term and a list of desired courses, it generates **non-conflicting schedules** (combinations of sections) and can optionally filter out schedules that require unrealistic walking time between consecutive classes.
 
-This repo is **in progress** — the database + schedule-generation logic is complete and work on sample data. The next steps being worked on is connecting to real course data + building a basic interface.
+This repo is **in progress**, the database + schedule-generation logic is complete and work on sample data. The next steps being worked on is connecting to real course data + building a basic interface.
 
 -------------------------------------------
 
