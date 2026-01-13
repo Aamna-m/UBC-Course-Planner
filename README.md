@@ -1,5 +1,3 @@
-# UBC-Course-Planner
-
 # UBC Course Planner (Postgres + SQL)
 
 This project is a SQL-first schedule generator for UBC course data.  
