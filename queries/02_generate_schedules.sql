@@ -1,9 +1,13 @@
 -- Add any number of courses) and build schedules one course at a time using recursion
 -- store chosen section_ids in an array
 -- when adding a new section, reject if it conflicts with any chosen section
+-- feature B: generate schedules for ANY number of courses
+-- student gives a list of desired courses (for a request_id)
+-- output: arrays of section_ids that don't conflict
 
-WITH desired AS (
-  -- turn the desired course codes into course_ids so that it is a ordered list for recursion
+WITH RECURSIVE
+desired AS (
+  -- map desired course codes to course_id
   SELECT
     sr.request_id,
     sr.term,
@@ -14,15 +18,17 @@ WITH desired AS (
   JOIN courses c
     ON c.subject = dc.subject
    AND c.course_number = dc.course_number
-  WHERE sr.request_id = 1
+  WHERE sr.request_id = (SELECT MAX(request_id) FROM schedule_requests)
+
 ),
 max_rn AS (
+  -- how many courses are in this request?
   SELECT request_id, MAX(rn) AS n
   FROM desired
   GROUP BY request_id
 ),
 sections_for_course AS (
-  -- all possible sections for each desired course in the term
+  -- all section choices for each desired course in the term
   SELECT
     d.request_id,
     d.rn,
@@ -32,8 +38,8 @@ sections_for_course AS (
     ON s.course_id = d.course_id
    AND s.term = d.term
 ),
-RECURSIVE build AS (
-  -- base: nothing picked yet
+build AS (
+  -- base: start with empty schedule
   SELECT
     m.request_id,
     0 AS rn_done,
@@ -42,7 +48,7 @@ RECURSIVE build AS (
 
   UNION ALL
 
-  -- add one course's section at a time
+  -- add a section for the next course
   SELECT
     b.request_id,
     b.rn_done + 1 AS rn_done,
@@ -52,7 +58,7 @@ RECURSIVE build AS (
     ON sfc.request_id = b.request_id
    AND sfc.rn = b.rn_done + 1
 
-  -- only allow adding this section if it does not conflict with anything already picked
+  -- reject this new section if it conflicts with anything already picked
   WHERE NOT EXISTS (
     SELECT 1
     FROM meetings new_m
